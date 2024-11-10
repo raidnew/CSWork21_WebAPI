@@ -1,0 +1,11 @@
+﻿<head>
+    <title>@ViewData["Title"]</title>
+    <meta charset="utf-8">
+    <link type="text/css" rel="stylesheet" href="~/css/style.css">
+    <script src="~/js/script.js"></script>
+</head>
+
+<nav>
+    <div> @await Component.InvokeAsync("NavigateMenu") </div>
+</nav>
+@RenderBody()

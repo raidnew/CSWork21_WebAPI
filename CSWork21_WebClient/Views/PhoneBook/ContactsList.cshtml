@@ -1,0 +1,30 @@
+﻿@using CSWork21.Enities;
+
+@{
+    ViewData["Title"] = "list";
+    Layout = "_Layout";
+}
+
+<div class="table">
+    <div class="row">
+        <div class="cell">ID</div>
+        <div class="cell">Имя</div>
+        <div class="cell">Фамилий</div>
+        <div class="cell">Отчество</div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+
+    @foreach (Contact contact in ViewBag.contacts)
+    {
+        <div class="row">
+            <div class="cell">@contact.Id</div>
+            <div class="cell">@contact.FirstName</div>
+            <div class="cell">@contact.LastName</div>
+            <div class="cell">@contact.ThirdName</div>
+            <div class="cell"><a href="/PhoneBook/ContactInfo/@contact.Id">Показать</a></div>
+            <div class="cell"><button onclick='javascript:removeContact("/PhoneBook/ContactRemove/", "@contact.Id")'>Удалить</button></div>
+        </div>
+    }
+
+</div>
