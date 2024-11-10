@@ -1,12 +1,12 @@
 ﻿using CSWork21_WebAPI.Auth;
 using CSWork21_WebAPI.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
+using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace CSWork21_WebAPI.Controllers
 {
@@ -19,19 +19,14 @@ namespace CSWork21_WebAPI.Controllers
     AuthenticationRequest authRequest,
     [FromServices] IJwtSigningEncodingKey signingEncodingKey)
         {
-            // 1. Проверяем данные пользователя из запроса.
-            // ...
-
-            // 2. Создаем утверждения для токена.
             var claims = new Claim[]
             {
             new Claim(ClaimTypes.NameIdentifier, authRequest.Name)
             };
 
-            // 3. Генерируем JWT.
             var token = new JwtSecurityToken(
-                issuer: "DemoApp",
-                audience: "DemoAppClient",
+                issuer: "CSWork21API",
+                audience: "CSWork21",
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(5),
                 signingCredentials: new SigningCredentials(
@@ -39,6 +34,7 @@ namespace CSWork21_WebAPI.Controllers
                         signingEncodingKey.SigningAlgorithm)
             );
 
+            //string jwtToken = JsonConvert.SerializeObject(token);
             string jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
             return jwtToken;
         }
