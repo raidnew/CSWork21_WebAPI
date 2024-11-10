@@ -1,6 +1,7 @@
 using CSWork21.Data;
 using CSWork21.Interfaces;
 using CSWork21_WebAPI.Contexts;
+using CSWork21_WebAPI.Data;
 using CSWork21_WebAPI.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,14 +22,13 @@ namespace CSWork21_WebAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("DBPhoneBook");
 
             services.AddDbContext<PhoneBookDbContext>(options => options.UseSqlServer(connectionString));
-            services.AddScoped<IPhoneBookEntries, PhoneBookEntriesTest>();
-            //services.AddScoped<IPhoneBookEntries, PhoneBookEntries>();
+            //services.AddScoped<IPhoneBookEntries, PhoneBookEntriesTest>();
+            services.AddScoped<IPhoneBookEntries, PhoneBookEntries>();
             services.AddMvc();
 
             services.AddIdentity<User, IdentityRole>()
@@ -55,7 +55,6 @@ namespace CSWork21_WebAPI
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
