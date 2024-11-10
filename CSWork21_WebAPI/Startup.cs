@@ -1,7 +1,9 @@
 using CSWork21.Data;
 using CSWork21.Interfaces;
+using CSWork21_WebAPI.Auth;
 using CSWork21_WebAPI.Contexts;
 using CSWork21_WebAPI.Data;
+using CSWork21_WebAPI.Interfaces;
 using CSWork21_WebAPI.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,7 +27,10 @@ namespace CSWork21_WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("DBPhoneBook");
+            const string signingSecurityKey = "0d5b3235a8b403c3dab9c3f4f65c07fcalskd234n1k41230";
+            SigningSymmetricKey signingKey = new SigningSymmetricKey(signingSecurityKey);
 
+            services.AddSingleton<IJwtSigningEncodingKey>(signingKey);
             services.AddDbContext<PhoneBookDbContext>(options => options.UseSqlServer(connectionString));
             //services.AddScoped<IPhoneBookEntries, PhoneBookEntriesTest>();
             services.AddScoped<IPhoneBookEntries, PhoneBookEntries>();
